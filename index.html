@@ -39,7 +39,6 @@ body {
   overflow: hidden;
 }
 
-/* ── FOND ── */
 body::before {
   content: '';
   position: fixed; inset: 0;
@@ -56,9 +55,7 @@ body::after {
 }
 body > * { position: relative; z-index: 2; }
 
-/* ══════════════════════════════════════
-   BANDE TAMPON — HAUT
-══════════════════════════════════════ */
+/* ══ BANDE TAMPON HAUT ══ */
 .stamp-bar {
   width: 100%;
   flex-shrink: 0;
@@ -70,13 +67,11 @@ body > * { position: relative; z-index: 2; }
   align-items: center;
   gap: 20px;
 }
-
 .stamp-ref {
   font-family: 'Special Elite', serif;
   font-size: 9px; letter-spacing: 4px;
   color: rgba(180,140,60,0.28);
 }
-
 .stamp-cls {
   font-family: 'Special Elite', serif;
   font-size: 15px; letter-spacing: 8px;
@@ -85,7 +80,6 @@ body > * { position: relative; z-index: 2; }
   padding: 5px 22px;
   text-align: center;
 }
-
 .stamp-meta {
   text-align: right;
   font-size: 9px; letter-spacing: 3px;
@@ -93,9 +87,7 @@ body > * { position: relative; z-index: 2; }
   font-style: italic; line-height: 1.8;
 }
 
-/* ══════════════════════════════════════
-   ZONE CENTRALE
-══════════════════════════════════════ */
+/* ══ ZONE CENTRALE ══ */
 .doc-body {
   flex: 1;
   display: flex;
@@ -114,47 +106,35 @@ body > * { position: relative; z-index: 2; }
   background: rgba(22,14,4,0.75);
 }
 
-/* ── EN-TÊTE ── */
 .doc-header {
   text-align: center;
   margin-bottom: 16px;
   padding-bottom: 14px;
   border-bottom: 1px solid var(--parch-deeper);
 }
-
 .doc-title {
   font-family: 'Special Elite', serif;
   font-size: clamp(30px, 4.8vw, 56px);
   color: #d4a840;
-  letter-spacing: 14px;
-  line-height: 1;
+  letter-spacing: 14px; line-height: 1;
   animation: flicker 10s infinite;
 }
 @keyframes flicker {
   0%,87%,100%{ opacity:1 }
-  88%{ opacity:0.68 }
-  89%{ opacity:1 }
-  92%{ opacity:0.84 }
-  93%{ opacity:1 }
+  88%{ opacity:0.68 } 89%{ opacity:1 }
+  92%{ opacity:0.84 } 93%{ opacity:1 }
 }
-
 .doc-subtitle {
   font-family: 'Special Elite', serif;
   font-size: clamp(10px, 1.3vw, 14px);
-  letter-spacing: 9px;
-  color: var(--parch-dim);
-  margin-top: 7px;
+  letter-spacing: 9px; color: var(--parch-dim); margin-top: 7px;
 }
-
 .doc-sub {
   font-size: clamp(9px, 1vw, 11px);
-  letter-spacing: 3px;
-  color: var(--parch-dark);
-  margin-top: 5px;
-  font-style: italic;
+  letter-spacing: 3px; color: var(--parch-dark);
+  margin-top: 5px; font-style: italic;
 }
 
-/* ── SÉPARATEUR ── */
 .sep {
   display: flex; align-items: center; gap: 14px;
   color: var(--parch-deeper);
@@ -167,11 +147,9 @@ body > * { position: relative; z-index: 2; }
   background: var(--parch-deeper); opacity: .8;
 }
 
-/* ── GRILLES ── */
 .mid-grid     { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 12px; }
 .factions-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 12px; }
 
-/* ── BLOCS CHAMPS ── */
 .field-block {
   border: 1px solid rgba(180,140,60,0.18);
   padding: 12px 16px;
@@ -183,14 +161,11 @@ body > * { position: relative; z-index: 2; }
   position: absolute; top: -7px; left: 12px;
   background: var(--bg); padding: 0 6px;
   font-size: 8px; letter-spacing: 4px;
-  color: var(--parch-dim);
-  font-family: 'Special Elite', serif;
+  color: var(--parch-dim); font-family: 'Special Elite', serif;
 }
-
 .field-row {
   display: flex; justify-content: space-between;
-  font-size: clamp(10px, 1.1vw, 12px);
-  color: var(--parch-dark);
+  font-size: clamp(10px, 1.1vw, 12px); color: var(--parch-dark);
   margin: 5px 0;
   border-bottom: 1px dotted rgba(180,140,60,0.1);
   padding-bottom: 4px;
@@ -200,162 +175,141 @@ body > * { position: relative; z-index: 2; }
 .field-row .us-v  { color: var(--us);  }
 .field-row .tal-v { color: var(--tal); }
 
-/* ── BLOCS FACTIONS ── */
 .faction-block {
   border: 1px solid rgba(180,140,60,0.18);
   padding: 12px 16px;
   background: rgba(14,8,0,0.55);
-  text-align: center;
-  position: relative;
+  text-align: center; position: relative;
 }
 .faction-block::before {
   content: attr(data-label);
   position: absolute; top: -7px; left: 12px;
   background: var(--bg); padding: 0 6px;
   font-size: 8px; letter-spacing: 4px;
-  color: var(--parch-dim);
-  font-family: 'Special Elite', serif;
+  color: var(--parch-dim); font-family: 'Special Elite', serif;
 }
-
 .faction-name-t {
   font-family: 'Special Elite', serif;
   font-size: clamp(12px, 1.4vw, 15px);
-  letter-spacing: 6px;
-  margin-bottom: 9px;
+  letter-spacing: 6px; margin-bottom: 9px;
 }
 .f-us  .faction-name-t { color: var(--us);  }
 .f-tal .faction-name-t { color: var(--tal); }
-
 .faction-hr { height: 1px; background: rgba(180,140,60,0.14); margin: 7px 0; }
-
 .faction-desc-t {
   font-size: clamp(9px, 1vw, 11px);
-  color: var(--parch-dark);
-  line-height: 1.8;
-  font-style: italic;
+  color: var(--parch-dark); line-height: 1.8; font-style: italic;
 }
-
 .freq-tag {
-  display: inline-block;
-  margin-top: 9px;
-  font-size: 9px; letter-spacing: 2px;
-  padding: 3px 12px;
-  border: 1px solid;
+  display: inline-block; margin-top: 9px;
+  font-size: 9px; letter-spacing: 2px; padding: 3px 12px; border: 1px solid;
 }
 .f-us  .freq-tag { color: #4a7a5a; border-color: rgba(74,122,90,0.3);  }
 .f-tal .freq-tag { color: #9a6a20; border-color: rgba(154,106,32,0.3); }
 
-/* ── RÈGLEMENTS DÉFILANTS ── */
 .rules-band {
   border: 1px solid rgba(180,140,60,0.18);
   background: rgba(14,8,0,0.55);
-  padding: 8px 14px;
-  margin-bottom: 12px;
-  overflow: hidden;
-  position: relative;
+  padding: 8px 14px; margin-bottom: 12px;
+  overflow: hidden; position: relative;
 }
 .rules-band::before {
   content: attr(data-label);
   position: absolute; top: -7px; left: 12px;
   background: var(--bg); padding: 0 6px;
   font-size: 8px; letter-spacing: 4px;
-  color: var(--parch-dim);
-  font-family: 'Special Elite', serif;
+  color: var(--parch-dim); font-family: 'Special Elite', serif;
 }
 .rules-ticker {
   font-size: clamp(9px, 1vw, 11px);
-  color: var(--parch-dark);
-  white-space: nowrap;
-  font-style: italic;
-  animation: ticker 42s linear infinite;
+  color: var(--parch-dark); white-space: nowrap;
+  font-style: italic; animation: ticker 42s linear infinite;
 }
 @keyframes ticker {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
 
-/* ── BARRE DE PROGRESSION ── */
 .progress-header {
   display: flex; justify-content: space-between;
-  font-size: 8px; letter-spacing: 3px;
-  color: var(--parch-dark);
-  margin-bottom: 6px;
-  font-family: 'Special Elite', serif;
+  font-size: 8px; letter-spacing: 3px; color: var(--parch-dark);
+  margin-bottom: 6px; font-family: 'Special Elite', serif;
 }
-
 .progress-track {
-  height: 13px;
-  background: rgba(14,8,0,0.85);
+  height: 13px; background: rgba(14,8,0,0.85);
   border: 1px solid rgba(180,140,60,0.22);
-  padding: 2px;
-  margin-bottom: 4px;
+  padding: 2px; margin-bottom: 4px;
 }
-
 .progress-fill {
-  height: 100%;
-  background: var(--parch-dim);
-  width: 0%;
-  transition: width 0.5s ease;
-  position: relative;
+  height: 100%; background: var(--parch-dim);
+  width: 0%; transition: width 0.5s ease; position: relative;
 }
 .progress-fill::after {
-  content: '';
-  position: absolute; right: 0; top: 0; bottom: 0;
-  width: 3px;
-  background: #d4a840;
-  opacity: .65;
+  content: ''; position: absolute; right: 0; top: 0; bottom: 0;
+  width: 3px; background: #d4a840; opacity: .65;
 }
-
 .progress-ticks {
   display: flex; justify-content: space-between;
   padding: 0 1px; margin-bottom: 8px;
 }
 .tick-lbl { font-size: 8px; color: var(--parch-deeper); }
 
-/* ── LOG SYSTÈME ── */
 .sys-log {
-  font-size: clamp(9px, 1vw, 11px);
-  color: var(--parch-dark);
-  min-height: 44px;
-  margin-bottom: 9px;
-  font-style: italic;
-  letter-spacing: .3px;
+  font-size: clamp(9px, 1vw, 11px); color: var(--parch-dark);
+  min-height: 44px; margin-bottom: 9px;
+  font-style: italic; letter-spacing: .3px;
 }
 .log-ok   { color: #4a6a3a; }
 .log-warn { color: var(--parch-dark); }
-
 .cursor-blk {
-  display: inline-block;
-  width: 6px; height: 12px;
-  background: var(--parch-dim);
-  vertical-align: middle;
+  display: inline-block; width: 6px; height: 12px;
+  background: var(--parch-dim); vertical-align: middle;
   animation: blink 1.3s step-end infinite;
 }
 @keyframes blink { 0%,100%{ opacity:1 } 50%{ opacity:0 } }
 
-/* ── TIP ── */
 .tip-section {
-  font-size: clamp(9px, 1vw, 11px);
-  color: var(--parch-dark);
-  font-style: italic;
-  line-height: 1.75;
+  font-size: clamp(9px, 1vw, 11px); color: var(--parch-dark);
+  font-style: italic; line-height: 1.75;
   border-top: 1px solid var(--parch-deeper);
-  padding-top: 9px;
-  text-align: center;
+  padding-top: 9px; text-align: center;
 }
 .tip-section .tip-key {
-  color: var(--parch-mid);
-  font-style: normal; font-weight: 700;
-  font-family: 'Special Elite', serif;
-  letter-spacing: 2px;
+  color: var(--parch-mid); font-style: normal; font-weight: 700;
+  font-family: 'Special Elite', serif; letter-spacing: 2px;
 }
 
-/* ══════════════════════════════════════
-   BANDE SIGNATURE — BAS
-══════════════════════════════════════ */
+/* ══ CONTRÔLE VOLUME ══ */
+.volume-ctrl {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 10px; justify-content: center;
+}
+.vol-label {
+  font-size: 9px; letter-spacing: 3px;
+  color: var(--parch-deeper); font-family: 'Special Elite', serif;
+}
+.vol-icon {
+  font-size: 11px; color: var(--parch-deeper);
+  cursor: pointer; user-select: none;
+  transition: color .2s;
+}
+.vol-icon:hover { color: var(--parch-dim); }
+input[type=range]#vol-slider {
+  -webkit-appearance: none;
+  width: 90px; height: 3px;
+  background: var(--parch-deeper);
+  outline: none; cursor: pointer;
+}
+input[type=range]#vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px; height: 10px;
+  background: var(--parch-dim);
+  border-radius: 50%;
+}
+
+/* ══ BANDE SIGNATURE BAS ══ */
 .sig-bar {
-  width: 100%;
-  flex-shrink: 0;
+  width: 100%; flex-shrink: 0;
   border-top: 2px solid var(--parch-deeper);
   background: rgba(12,7,0,0.78);
   padding: 10px 40px;
@@ -364,74 +318,61 @@ body > * { position: relative; z-index: 2; }
   align-items: center;
   gap: 20px;
 }
-
 .sig-left {
   font-size: 9px; letter-spacing: 3px;
-  color: var(--parch-deeper);
-  font-style: italic; line-height: 1.8;
+  color: var(--parch-deeper); font-style: italic; line-height: 1.8;
 }
-
 .sig-center { text-align: center; flex: 1; }
-
 .sig-line {
   width: 170px; height: 1px;
-  background: var(--parch-deeper);
-  margin: 0 auto 5px;
+  background: var(--parch-deeper); margin: 0 auto 5px;
 }
 .sig-name {
   font-family: 'Special Elite', serif;
-  font-size: 12px; letter-spacing: 3px;
-  color: var(--parch-dark);
+  font-size: 12px; letter-spacing: 3px; color: var(--parch-dark);
 }
-.sig-title {
-  font-size: 8px; letter-spacing: 3px;
-  color: var(--parch-deeper); margin-top: 2px;
-}
+.sig-title { font-size: 8px; letter-spacing: 3px; color: var(--parch-deeper); margin-top: 2px; }
 
 .studio-badge {
   border: 1px solid rgba(180,140,60,0.2);
-  padding: 6px 16px;
-  background: rgba(14,8,0,0.65);
-  text-align: center; position: relative;
-  flex-shrink: 0;
+  padding: 6px 16px; background: rgba(14,8,0,0.65);
+  text-align: center; position: relative; flex-shrink: 0;
 }
 .studio-badge::before {
   content: 'DEVELOPED BY';
-  position: absolute; top: -7px; left: 50%;
-  transform: translateX(-50%);
+  position: absolute; top: -7px; left: 50%; transform: translateX(-50%);
   background: var(--bg); padding: 0 5px;
-  font-size: 7px; letter-spacing: 3px;
-  color: var(--parch-deeper);
-  font-family: 'Special Elite', serif;
-  white-space: nowrap;
+  font-size: 7px; letter-spacing: 3px; color: var(--parch-deeper);
+  font-family: 'Special Elite', serif; white-space: nowrap;
 }
 .studio-name {
   font-family: 'Special Elite', serif;
-  font-size: 13px; letter-spacing: 3px;
-  color: var(--parch-mid);
+  font-size: 13px; letter-spacing: 3px; color: var(--parch-mid);
 }
-.studio-sub {
-  font-size: 8px; letter-spacing: 2px;
-  color: var(--parch-deeper); margin-top: 2px;
-}
+.studio-sub { font-size: 8px; letter-spacing: 2px; color: var(--parch-deeper); margin-top: 2px; }
 
-/* ══════════════════════════════════════
-   RESPONSIVE
-══════════════════════════════════════ */
 @media (max-width: 680px) {
   .mid-grid, .factions-row { grid-template-columns: 1fr; }
-  .doc-title    { font-size: 28px; letter-spacing: 8px; }
-  .stamp-bar, .sig-bar { padding: 8px 16px; }
-  .doc-body     { padding: 14px 16px; }
-  .frame-inner  { padding: 16px 14px 12px; }
-  .stamp-cls    { font-size: 11px; letter-spacing: 5px; padding: 4px 12px; }
-  .sig-bar      { flex-wrap: wrap; justify-content: center; text-align: center; }
-  .sig-left     { width: 100%; text-align: center; }
+  .doc-title { font-size: 28px; letter-spacing: 8px; }
+  .stamp-bar, .sig-bar { padding: 8px 16px; gap: 10px; }
+  .doc-body { padding: 14px 16px; }
+  .frame-inner { padding: 16px 14px 12px; }
+  .stamp-cls { font-size: 11px; letter-spacing: 4px; padding: 4px 10px; }
+  .sig-bar { flex-wrap: wrap; justify-content: center; text-align: center; }
+  .sig-left { width: 100%; text-align: center; }
 }
 
 </style>
 </head>
 <body>
+
+<!-- ══ MUSIQUE DE FOND ══
+     Remplace l'URL par ton fichier hébergé sur GitHub Pages :
+     https://TON-PSEUDO.github.io/project-vostok-loading/audio/ambiance.mp3
+-->
+<audio id="bg-music" loop>
+  <source src="audio/ambiance.mp3" type="audio/mpeg">
+</audio>
 
 <!-- ══ TAMPON HAUT ══ -->
 <div class="stamp-bar">
@@ -449,7 +390,6 @@ body > * { position: relative; z-index: 2; }
     <div class="frame-outer">
       <div class="frame-inner">
 
-        <!-- EN-TÊTE -->
         <div class="doc-header">
           <div class="doc-title">PROJECT VOSTOK</div>
           <div class="doc-subtitle">MILITARY ROLEPLAY</div>
@@ -458,7 +398,6 @@ body > * { position: relative; z-index: 2; }
 
         <div class="sep">INTEL REPORT</div>
 
-        <!-- INFO SERVEUR -->
         <div class="mid-grid">
           <div class="field-block" data-label="THEATRE OPERATIONS">
             <div class="field-row">ZONE OPS   <span id="srv-map">—</span></div>
@@ -476,7 +415,6 @@ body > * { position: relative; z-index: 2; }
 
         <div class="sep">FORCES EN PRESENCE</div>
 
-        <!-- FACTIONS -->
         <div class="factions-row">
           <div class="faction-block f-us" data-label="FRIENDLY FORCES">
             <div class="faction-name-t">U.S. ARMY</div>
@@ -504,7 +442,6 @@ body > * { position: relative; z-index: 2; }
 
         <div class="sep">DIRECTIVES</div>
 
-        <!-- RÈGLEMENTS -->
         <div class="rules-band" data-label="REGLEMENT OPERATIONNEL">
           <div class="rules-ticker">
             Art. 1 — Respect de la hiérarchie militaire obligatoire en tout temps &nbsp;·&nbsp;
@@ -526,7 +463,6 @@ body > * { position: relative; z-index: 2; }
 
         <div class="sep">PROGRESSION</div>
 
-        <!-- BARRE DE CHARGEMENT -->
         <div class="progress-header">
           <span>// CHARGEMENT DES RESSOURCES OPERATIONNELLES</span>
           <span id="pct-label">0%</span>
@@ -542,15 +478,21 @@ body > * { position: relative; z-index: 2; }
           <span class="tick-lbl">100</span>
         </div>
 
-        <!-- LOG SYSTÈME -->
         <div class="sys-log" id="sys-log">
           <div class="log-warn">[INIT] Établissement de la liaison sécurisée... <span class="cursor-blk"></span></div>
         </div>
 
-        <!-- TIP -->
         <div class="tip-section">
           <span class="tip-key" id="tip-key">BRIEFING</span>
           <span id="tip-text"> — Rejoignez une escouade dès votre connexion. Un soldat isolé est une cible.</span>
+        </div>
+
+        <!-- Contrôle volume discret -->
+        <div class="volume-ctrl">
+          <span class="vol-label">// TRANSMISSION</span>
+          <span class="vol-icon" id="vol-toggle" title="Muet / Son">♪</span>
+          <input type="range" id="vol-slider" min="0" max="100" value="10" step="1">
+          <span class="vol-label" id="vol-pct">10%</span>
         </div>
 
       </div>
@@ -576,8 +518,49 @@ body > * { position: relative; z-index: 2; }
 </div>
 
 <script>
-// ── TIPS ROTATIFS ───────────────────────────────
-const TIPS = [
+// ══ MUSIQUE ══════════════════════════════════════
+var music  = document.getElementById('bg-music');
+var slider = document.getElementById('vol-slider');
+var volPct = document.getElementById('vol-pct');
+var toggle = document.getElementById('vol-toggle');
+var muted  = false;
+
+function startMusic() {
+  music.volume = 0.10;
+  music.play().catch(function() {});
+}
+
+// GMod charge la page sans interaction utilisateur,
+// donc on tente le play direct + fallback sur premier clic
+startMusic();
+document.addEventListener('click', startMusic, { once: true });
+
+slider.addEventListener('input', function() {
+  var v = parseInt(this.value) / 100;
+  music.volume = v;
+  volPct.textContent = this.value + '%';
+  if (v === 0) { muted = true;  toggle.style.opacity = '0.3'; }
+  else         { muted = false; toggle.style.opacity = '1';   }
+});
+
+toggle.addEventListener('click', function() {
+  muted = !muted;
+  if (muted) {
+    music.volume = 0;
+    slider.value = 0;
+    volPct.textContent = '0%';
+    toggle.style.opacity = '0.3';
+  } else {
+    var restore = 0.10;
+    music.volume = restore;
+    slider.value = Math.round(restore * 100);
+    volPct.textContent = Math.round(restore * 100) + '%';
+    toggle.style.opacity = '1';
+  }
+});
+
+// ══ TIPS ROTATIFS ════════════════════════════════
+var TIPS = [
   ["BRIEFING",  "Rejoignez une escouade dès votre connexion. Un soldat isolé est une cible."],
   ["RADIO",     "Utilisez /r [message] sur votre fréquence active. Changez avec /freq [NUM]."],
   ["MEDICAL",   "Signalez vos blessures au médecin d'escouade. Un saignement non traité est fatal."],
@@ -588,8 +571,7 @@ const TIPS = [
   ["HONNEUR",   "Le code militaire est votre loi. Respectez-le en toutes circonstances."],
 ];
 
-// ── LOG SYSTÈME ─────────────────────────────────
-const LOGS = [
+var LOGS = [
   {s:'ok', t:'[AUTH] Liaison sécurisée ............... établie'},
   {s:'ok', t:'[SYS]  Faction system .................. chargé'},
   {s:'ok', t:'[SYS]  Grades & permissions ............. chargés'},
@@ -603,8 +585,8 @@ const LOGS = [
   {s:'ok', t:'[OK]   Tous systèmes opérationnels — CONNEXION EN COURS...'},
 ];
 
-let tipIdx = 0, logIdx = 1;
-const logEl = document.getElementById('sys-log');
+var tipIdx = 0, logIdx = 1;
+var logEl  = document.getElementById('sys-log');
 
 function nextTip() {
   tipIdx = (tipIdx + 1) % TIPS.length;
@@ -614,14 +596,14 @@ function nextTip() {
 setInterval(nextTip, 7000);
 
 function pushLog(entry) {
-  const d = document.createElement('div');
-  d.className = 'log-' + entry.s;
+  var d = document.createElement('div');
+  d.className   = 'log-' + entry.s;
   d.textContent = entry.t;
-  const pending = logEl.querySelector('.log-warn:last-child');
+  var pending = logEl.querySelector('.log-warn:last-child');
   if (pending) pending.remove();
   logEl.appendChild(d);
   if (logIdx < LOGS.length) {
-    const p = document.createElement('div');
+    var p = document.createElement('div');
     p.className = 'log-warn';
     p.innerHTML = LOGS[logIdx].t.split('...')[0] + '... <span class="cursor-blk"></span>';
     logEl.appendChild(p);
@@ -629,72 +611,60 @@ function pushLog(entry) {
   while (logEl.children.length > 4) logEl.removeChild(logEl.firstChild);
 }
 
-// ── HOOKS GARRY'S MOD ───────────────────────────
-// Ces fonctions sont appelées automatiquement par le moteur GMod.
-
+// ══ HOOKS GARRY'S MOD ════════════════════════════
 if (typeof GameDetails !== 'undefined') {
 
-  GameDetails = function(serverName, mapName, maxPlayers, playerCount, loadingIdx, loadingLevel) {
+  GameDetails = function(serverName, mapName, maxPlayers, playerCount) {
     document.getElementById('srv-map').textContent     = mapName.toUpperCase();
     document.getElementById('srv-players').textContent = playerCount + ' / ' + maxPlayers;
   };
 
   SetLoadingProgressBar = function(pct) {
-    const p = Math.round(pct * 100);
+    var p = Math.round(pct * 100);
     document.getElementById('prog-bar').style.width  = p + '%';
     document.getElementById('pct-label').textContent = p + '%';
-    if (logIdx < LOGS.length && p % 9 === 0) {
-      pushLog(LOGS[logIdx]);
-      logIdx++;
-    }
+    if (logIdx < LOGS.length && p % 9 === 0) { pushLog(LOGS[logIdx]); logIdx++; }
   };
 
   SetStatusChanged = function(status) {
-    if (logIdx < LOGS.length) {
-      pushLog({ s: 'ok', t: '[SYS] ' + status });
-      logIdx++;
-    }
+    if (logIdx < LOGS.length) { pushLog({s:'ok', t:'[SYS] ' + status}); logIdx++; }
   };
 
-  SetFilesNeeded  = function(total) {};
-  DownloadingFile = function(fileName) {};
+  SetFilesNeeded  = function() {};
+  DownloadingFile = function() {};
 
 } else {
-  // ── FALLBACK NAVIGATEUR (test hors GMod) ────────
+  // Fallback preview navigateur
   document.getElementById('srv-map').textContent     = 'RP_MOUNTAINSIDE';
   document.getElementById('srv-players').textContent = '47 / 64';
   document.getElementById('srv-ping').textContent    = '32 ms';
 
-  // Simulation auto du chargement
-  let pct = 0;
-  const sim = setInterval(function() {
+  var pct = 0;
+  var sim = setInterval(function() {
     pct = Math.min(100, pct + Math.random() * 3 + 0.5);
-    const p = Math.round(pct);
+    var p = Math.round(pct);
     document.getElementById('prog-bar').style.width  = p + '%';
     document.getElementById('pct-label').textContent = p + '%';
-    if (logIdx < LOGS.length && p % 9 === 0) {
-      pushLog(LOGS[logIdx]);
-      logIdx++;
-    }
+    if (logIdx < LOGS.length && p % 9 === 0) { pushLog(LOGS[logIdx]); logIdx++; }
     if (pct >= 100) clearInterval(sim);
   }, 120);
 }
 
-// ── TIMER OPÉRATION ─────────────────────────────
-let t = 22 * 60 + 15;
+// ══ TIMER OPÉRATION ══════════════════════════════
+var t = 22 * 60 + 15;
 setInterval(function() {
   t = t > 0 ? t - 1 : 30 * 60;
-  const el = document.getElementById('srv-timer');
+  var el = document.getElementById('srv-timer');
   if (el) el.textContent =
     String(Math.floor(t / 60)).padStart(2, '0') + ':' +
     String(t % 60).padStart(2, '0');
 }, 1000);
 
-// ── PING LIVE ───────────────────────────────────
-let pingV = 32;
+// ══ PING LIVE ════════════════════════════════════
+var pingV = 32;
 setInterval(function() {
   pingV = Math.max(18, Math.min(85, pingV + Math.round(Math.random() * 8 - 4)));
-  const el = document.getElementById('srv-ping');
+  var el = document.getElementById('srv-ping');
   if (el) el.textContent = pingV + ' ms';
 }, 3000);
 
