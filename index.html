@@ -2,17 +2,18 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap');
 
+* { margin:0; padding:0; box-sizing:border-box; }
+
 #ls {
   background: #100c04;
-  min-height: 660px;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   font-family: 'Courier Prime', 'Courier New', monospace;
   color: #c8a96e;
   position: relative;
   overflow: hidden;
-  padding: 0;
 }
 
 .bg-grid {
@@ -20,10 +21,12 @@
   background-image:
     repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(180,140,60,0.035) 28px, rgba(180,140,60,0.035) 29px),
     repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(180,140,60,0.025) 28px, rgba(180,140,60,0.025) 29px);
+  pointer-events: none;
 }
 .bg-vignette {
   position: absolute; inset: 0; z-index: 0;
-  background: radial-gradient(ellipse at center, transparent 38%, rgba(8,5,0,0.8) 100%);
+  background: radial-gradient(ellipse at center, transparent 35%, rgba(6,4,0,0.85) 100%);
+  pointer-events: none;
 }
 #ls > * { position: relative; z-index: 2; }
 
@@ -31,131 +34,127 @@
 .stamp-bar {
   width: 100%;
   border-bottom: 2px solid rgba(160,30,30,0.35);
-  background: rgba(30,5,5,0.55);
-  padding: 8px 28px;
+  background: rgba(25,5,5,0.6);
+  padding: 10px 36px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 16px;
   flex-shrink: 0;
 }
-
+.stamp-ref {
+  font-size: 9px; letter-spacing: 4px;
+  color: rgba(180,140,60,0.3); font-family: 'Special Elite', serif;
+}
 .stamp-cls {
   font-family: 'Special Elite', serif;
-  font-size: 13px;
-  letter-spacing: 6px;
-  color: rgba(200,50,50,0.75);
-  border: 2px solid rgba(200,50,50,0.55);
-  padding: 3px 14px;
-  display: inline-block;
+  font-size: 14px; letter-spacing: 7px;
+  color: rgba(210,55,55,0.75);
+  border: 2px solid rgba(210,55,55,0.5);
+  padding: 4px 18px;
 }
-
 .stamp-meta {
-  text-align: right;
-  font-size: 9px;
-  letter-spacing: 3px;
-  color: rgba(180,140,60,0.4);
-  font-style: italic;
-  line-height: 1.7;
+  text-align: right; font-size: 9px; letter-spacing: 3px;
+  color: rgba(180,140,60,0.35); font-style: italic; line-height: 1.7;
 }
 
-.stamp-ref {
-  font-size: 9px;
-  letter-spacing: 4px;
-  color: rgba(180,140,60,0.25);
-  font-family: 'Special Elite', serif;
-}
-
-/* ── CONTENU CENTRAL ── */
+/* ── ZONE CENTRALE FLEX ── */
 .doc-body {
   flex: 1;
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 16px 18px;
+  justify-content: center;
+  padding: 20px 36px;
 }
 
-.doc-wrap { width: 100%; max-width: 700px; }
+.doc-wrap { width: 100%; max-width: 960px; }
 
 .frame-outer { border: 2px solid #3a2a10; padding: 3px; }
 .frame-inner {
   border: 1px solid rgba(180,140,60,0.18);
-  padding: 18px 22px 14px;
-  background: rgba(22,14,4,0.72);
+  padding: 22px 30px 18px;
+  background: rgba(22,14,4,0.75);
 }
 
+/* ── HEADER ── */
 .doc-header {
-  text-align: center; margin-bottom: 11px;
-  padding-bottom: 11px; border-bottom: 1px solid #3a2a10;
+  text-align: center; margin-bottom: 14px;
+  padding-bottom: 14px; border-bottom: 1px solid #3a2a10;
 }
 .doc-title {
   font-family: 'Special Elite', serif;
-  font-size: clamp(22px, 5vw, 40px);
-  color: #d4a840; letter-spacing: 8px; line-height: 1;
+  font-size: clamp(28px, 4.5vw, 52px);
+  color: #d4a840; letter-spacing: 12px; line-height: 1;
   animation: flicker 10s infinite;
 }
 @keyframes flicker {
-  0%,87%,100%{opacity:1} 88%{opacity:0.72} 89%{opacity:1} 92%{opacity:0.88} 93%{opacity:1}
+  0%,87%,100%{opacity:1} 88%{opacity:0.7} 89%{opacity:1} 92%{opacity:0.85} 93%{opacity:1}
 }
 .doc-subtitle {
   font-family: 'Special Elite', serif;
-  font-size: 11px; letter-spacing: 7px; color: #7a5a28; margin-top: 4px;
+  font-size: clamp(10px, 1.2vw, 13px); letter-spacing: 8px;
+  color: #7a5a28; margin-top: 6px;
 }
-.doc-sub { font-size: 10px; letter-spacing: 3px; color: #5a3e18; margin-top: 4px; font-style: italic; }
+.doc-sub {
+  font-size: clamp(9px, 1vw, 11px); letter-spacing: 3px;
+  color: #5a3e18; margin-top: 5px; font-style: italic;
+}
 
+/* ── SEP ── */
 .sep {
-  display: flex; align-items: center; gap: 10px;
+  display: flex; align-items: center; gap: 12px;
   color: #3a2a10; font-size: 8px; letter-spacing: 5px;
-  font-family: 'Special Elite', serif; margin: 8px 0;
+  font-family: 'Special Elite', serif; margin: 10px 0;
 }
-.sep::before, .sep::after { content:''; flex:1; height:1px; background:#3a2a10; opacity:.7; }
+.sep::before, .sep::after { content:''; flex:1; height:1px; background:#3a2a10; opacity:.8; }
 
-.mid-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; margin-bottom: 9px; }
-.factions-row { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; margin-bottom: 9px; }
+/* ── GRILLES ── */
+.mid-grid     { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 12px; }
+.factions-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 12px; }
 
 .field-block {
   border: 1px solid rgba(180,140,60,0.18);
-  padding: 9px 12px; background: rgba(14,8,0,0.55); position: relative;
+  padding: 11px 16px; background: rgba(14,8,0,0.55); position: relative;
 }
 .field-block::before {
   content: attr(data-label);
-  position: absolute; top:-7px; left:10px;
-  background: #100c04; padding: 0 5px;
+  position: absolute; top:-7px; left:12px;
+  background: #100c04; padding: 0 6px;
   font-size: 8px; letter-spacing: 4px; color: #7a5a28; font-family: 'Special Elite', serif;
 }
 .field-row {
   display: flex; justify-content: space-between;
-  font-size: 11px; color: #5a3e18;
-  margin: 3px 0; border-bottom: 1px dotted rgba(180,140,60,0.1); padding-bottom: 2px;
+  font-size: clamp(10px, 1.1vw, 12px); color: #5a3e18;
+  margin: 4px 0; border-bottom: 1px dotted rgba(180,140,60,0.1); padding-bottom: 3px;
 }
 .field-row:last-child { border-bottom:none; padding-bottom:0; }
-.field-row span { color: #c8a96e; font-weight:700; }
+.field-row span  { color: #c8a96e; font-weight:700; }
 .field-row .us-v  { color: #5a8a6a; }
 .field-row .tal-v { color: #a07828; }
 
 .faction-block {
   border: 1px solid rgba(180,140,60,0.18);
-  padding: 9px 12px; background: rgba(14,8,0,0.55);
+  padding: 11px 16px; background: rgba(14,8,0,0.55);
   text-align: center; position: relative;
 }
 .faction-block::before {
   content: attr(data-label);
-  position: absolute; top:-7px; left:10px;
-  background: #100c04; padding: 0 5px;
+  position: absolute; top:-7px; left:12px;
+  background: #100c04; padding: 0 6px;
   font-size: 8px; letter-spacing: 4px; color: #7a5a28; font-family: 'Special Elite', serif;
 }
 .faction-name-t {
   font-family: 'Special Elite', serif;
-  font-size: 12px; letter-spacing: 4px; margin-bottom: 6px;
+  font-size: clamp(11px, 1.3vw, 14px); letter-spacing: 5px; margin-bottom: 8px;
 }
 .f-us  .faction-name-t { color: #5a8a6a; }
 .f-tal .faction-name-t { color: #a07828; }
-.faction-hr { height:1px; background:rgba(180,140,60,0.14); margin:5px 0; }
-.faction-desc-t { font-size: 10px; color: #5a3e18; line-height:1.7; font-style:italic; }
+.faction-hr { height:1px; background:rgba(180,140,60,0.14); margin:6px 0; }
+.faction-desc-t { font-size: clamp(9px, 1vw, 11px); color: #5a3e18; line-height:1.75; font-style:italic; }
 .freq-tag {
-  display:inline-block; margin-top:7px;
-  font-size:9px; letter-spacing:2px; padding:2px 8px; border:1px solid;
+  display:inline-block; margin-top:8px;
+  font-size:9px; letter-spacing:2px; padding:2px 10px; border:1px solid;
 }
 .f-us  .freq-tag { color:#4a7a5a; border-color:rgba(74,122,90,0.3); }
 .f-tal .freq-tag { color:#9a6a20; border-color:rgba(154,106,32,0.3); }
@@ -163,30 +162,30 @@
 .rules-band {
   border: 1px solid rgba(180,140,60,0.18);
   background: rgba(14,8,0,0.55);
-  padding: 7px 12px; margin-bottom: 9px;
+  padding: 8px 14px; margin-bottom: 12px;
   overflow: hidden; position: relative;
 }
 .rules-band::before {
   content: attr(data-label);
-  position: absolute; top:-7px; left:10px;
-  background: #100c04; padding: 0 5px;
+  position: absolute; top:-7px; left:12px;
+  background: #100c04; padding: 0 6px;
   font-size: 8px; letter-spacing: 4px; color: #7a5a28; font-family: 'Special Elite', serif;
 }
 .rules-ticker {
-  font-size: 10px; color: #5a3e18; white-space: nowrap;
-  font-style: italic; animation: ticker 38s linear infinite;
+  font-size: clamp(9px,1vw,11px); color: #5a3e18; white-space: nowrap;
+  font-style: italic; animation: ticker 42s linear infinite;
 }
 @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
 .progress-header {
   display: flex; justify-content: space-between;
   font-size: 8px; letter-spacing: 3px; color: #5a3e18;
-  margin-bottom: 5px; font-family: 'Special Elite', serif;
+  margin-bottom: 6px; font-family: 'Special Elite', serif;
 }
 .progress-track {
-  height: 11px; background: rgba(14,8,0,0.8);
+  height: 13px; background: rgba(14,8,0,0.8);
   border: 1px solid rgba(180,140,60,0.22);
-  padding: 2px; margin-bottom: 3px;
+  padding: 2px; margin-bottom: 4px;
 }
 .progress-fill {
   height:100%; background:#7a5a28; width:0%;
@@ -194,27 +193,27 @@
 }
 .progress-fill::after {
   content:''; position:absolute; right:0; top:0; bottom:0;
-  width:3px; background:#d4a840; opacity:.6;
+  width:3px; background:#d4a840; opacity:.65;
 }
-.progress-ticks { display:flex; justify-content:space-between; padding:0 1px; margin-bottom:5px; }
+.progress-ticks { display:flex; justify-content:space-between; padding:0 1px; margin-bottom:8px; }
 .tick-lbl { font-size:8px; color:#3a2a10; }
 
 .sys-log {
-  font-size: 10px; color: #5a3e18; min-height:36px;
-  margin-bottom: 6px; font-style:italic; letter-spacing:.3px;
+  font-size: clamp(9px,1vw,11px); color: #5a3e18; min-height:42px;
+  margin-bottom: 8px; font-style:italic; letter-spacing:.3px;
 }
 .log-ok   { color: #4a6a3a; }
 .log-warn { color: #5a3e18; }
 .cursor-blk {
-  display:inline-block; width:6px; height:11px;
+  display:inline-block; width:6px; height:12px;
   background:#7a5a28; vertical-align:middle;
   animation: blink 1.3s step-end infinite;
 }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
 .tip-section {
-  font-size: 10px; color: #5a3e18; font-style: italic;
-  line-height: 1.7; border-top: 1px solid #3a2a10; padding-top: 7px;
+  font-size: clamp(9px,1vw,11px); color: #5a3e18; font-style: italic;
+  line-height: 1.75; border-top: 1px solid #3a2a10; padding-top: 8px;
   text-align: center;
 }
 .tip-section .tip-key {
@@ -226,56 +225,30 @@
 .sig-bar {
   width: 100%;
   border-top: 2px solid #3a2a10;
-  background: rgba(14,8,0,0.7);
-  padding: 9px 28px;
+  background: rgba(14,8,0,0.75);
+  padding: 10px 36px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 16px;
   flex-shrink: 0;
 }
-
 .sig-left {
-  font-size: 9px;
-  letter-spacing: 3px;
-  color: #3a2a10;
-  font-style: italic;
-  line-height: 1.7;
+  font-size: 9px; letter-spacing: 3px;
+  color: #3a2a10; font-style: italic; line-height: 1.7;
 }
-
-.sig-center {
-  text-align: center;
-  flex: 1;
-}
-
-.sig-line {
-  width: 140px;
-  height: 1px;
-  background: #3a2a10;
-  margin: 0 auto 4px;
-}
-
+.sig-center { text-align: center; flex: 1; }
+.sig-line { width: 160px; height: 1px; background: #3a2a10; margin: 0 auto 4px; }
 .sig-name {
   font-family: 'Special Elite', serif;
-  font-size: 11px;
-  letter-spacing: 3px;
-  color: #5a3e18;
+  font-size: 12px; letter-spacing: 3px; color: #5a3e18;
 }
-
-.sig-title {
-  font-size: 8px;
-  letter-spacing: 3px;
-  color: #3a2a10;
-  margin-top: 2px;
-}
+.sig-title { font-size: 8px; letter-spacing: 3px; color: #3a2a10; margin-top: 2px; }
 
 .studio-badge {
   border: 1px solid rgba(180,140,60,0.2);
-  padding: 5px 12px;
-  background: rgba(14,8,0,0.6);
-  text-align: center;
-  position: relative;
-  flex-shrink: 0;
+  padding: 6px 14px; background: rgba(14,8,0,0.6);
+  text-align: center; position: relative; flex-shrink: 0;
 }
 .studio-badge::before {
   content: 'DEVELOPED BY';
@@ -286,18 +259,20 @@
 }
 .studio-name {
   font-family: 'Special Elite', serif;
-  font-size: 12px; letter-spacing: 3px; color: #9a7a3a;
+  font-size: 13px; letter-spacing: 3px; color: #9a7a3a;
 }
 .studio-sub { font-size: 8px; letter-spacing: 2px; color: #3a2a10; margin-top: 2px; }
 
+/* ── BOUTONS PREVIEW ── */
 .preview-btns {
-  display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; justify-content: center;
+  display: flex; gap: 10px; margin-top: 14px;
+  flex-wrap: wrap; justify-content: center;
 }
 .pvbtn {
   font-family: 'Special Elite', serif; font-size: 10px; letter-spacing: 2px;
   color: #6a4e22; background: transparent;
   border: 1px solid rgba(180,140,60,0.22);
-  padding: 5px 14px; cursor: pointer;
+  padding: 5px 16px; cursor: pointer;
   transition: color .2s, border-color .2s;
 }
 .pvbtn:hover { color: #c8a96e; border-color: rgba(180,140,60,0.5); }
@@ -307,17 +282,14 @@
   <div class="bg-grid"></div>
   <div class="bg-vignette"></div>
 
-  <!-- BANDE TAMPON HAUT -->
+  <!-- TAMPON HAUT -->
   <div class="stamp-bar">
     <div class="stamp-ref">CIA — DOC. REF: 1986-0847</div>
     <div class="stamp-cls">TOP SECRET / CLASSIFIED</div>
-    <div class="stamp-meta">
-      DATE: 14 AUG 1986<br>
-      COPY 1 OF 1 — EYES ONLY
-    </div>
+    <div class="stamp-meta">DATE: 14 AUG 1986<br>COPY 1 OF 1 — EYES ONLY</div>
   </div>
 
-  <!-- CONTENU -->
+  <!-- CONTENU CENTRAL -->
   <div class="doc-body">
     <div class="doc-wrap">
       <div class="frame-outer">
@@ -333,16 +305,16 @@
 
           <div class="mid-grid">
             <div class="field-block" data-label="THEATRE OPERATIONS">
-              <div class="field-row">ZONE OPS   <span id="srv-map">—</span></div>
-              <div class="field-row">EFFECTIFS  <span id="srv-players">— / —</span></div>
-              <div class="field-row">LIAISON    <span id="srv-ping">— ms</span></div>
+              <div class="field-row">ZONE OPS   <span id="srv-map">RP_MOUNTAINSIDE</span></div>
+              <div class="field-row">EFFECTIFS  <span id="srv-players">47 / 64</span></div>
+              <div class="field-row">LIAISON    <span id="srv-ping">32 ms</span></div>
               <div class="field-row">PROTOCOLE  <span>MILITARY RP</span></div>
             </div>
             <div class="field-block" data-label="SITUATION ACTUELLE">
               <div class="field-row">SECTEUR US   <span class="us-v">SECURED</span></div>
               <div class="field-row">SECTEUR TAL  <span class="tal-v">ACTIVE</span></div>
-              <div class="field-row">OBJECTIF     <span id="srv-obj">COL KHYBER</span></div>
-              <div class="field-row">T-MINUS      <span id="srv-timer">—:—</span></div>
+              <div class="field-row">OBJECTIF     <span>COL KHYBER</span></div>
+              <div class="field-row">T-MINUS      <span id="srv-timer">22:15</span></div>
             </div>
           </div>
 
@@ -397,7 +369,7 @@
           <div class="sep">PROGRESSION</div>
 
           <div class="progress-header">
-            <span>// CHARGEMENT DES RESSOURCES</span>
+            <span>// CHARGEMENT DES RESSOURCES OPERATIONNELLES</span>
             <span id="pct-label">0%</span>
           </div>
           <div class="progress-track">
@@ -427,11 +399,11 @@
     <div class="preview-btns">
       <button class="pvbtn" onclick="simLoad()">Simuler chargement</button>
       <button class="pvbtn" onclick="nextTip()">Conseil suivant</button>
-      <button class="pvbtn" onclick="sendPrompt('Génère le code HTML final complet du loading screen Project Vostok version tampon en haut et signature en bas')">Code final ↗</button>
+      <button class="pvbtn" onclick="sendPrompt('Génère le code HTML final plein écran du loading screen Project Vostok')">Code final ↗</button>
     </div>
   </div>
 
-  <!-- BANDE SIGNATURE BAS -->
+  <!-- SIGNATURE BAS -->
   <div class="sig-bar">
     <div class="sig-left">
       Ce document est la propriété exclusive<br>
@@ -531,8 +503,4 @@ setInterval(() => {
   const el = document.getElementById('srv-ping');
   if (el) el.textContent = pingV + ' ms';
 }, 3000);
-
-document.getElementById('srv-map').textContent = 'RP_MOUNTAINSIDE';
-document.getElementById('srv-players').textContent = '47 / 64';
-document.getElementById('srv-ping').textContent = '32 ms';
 </script>
