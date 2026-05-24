@@ -1,147 +1,538 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
+
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    background: #0a0f06;
-    color: #7eb856;
-    font-family: 'Courier New', monospace;
-    overflow: hidden;
-    height: 100vh;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap');
 
-  /* Scanlines overlay */
-  body::after {
-    content:'';
-    position:fixed; inset:0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0,0,0,0.15) 2px,
-      rgba(0,0,0,0.15) 4px
-    );
-    pointer-events:none; z-index:999;
-  }
+#ls {
+  background: #100c04;
+  min-height: 660px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  color: #c8a96e;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
 
-  .container { display:flex; flex-direction:column; align-items:center;
-               justify-content:center; height:100vh; gap:24px; padding:40px; }
+.bg-grid {
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(180,140,60,0.035) 28px, rgba(180,140,60,0.035) 29px),
+    repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(180,140,60,0.025) 28px, rgba(180,140,60,0.025) 29px);
+}
+.bg-vignette {
+  position: absolute; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse at center, transparent 38%, rgba(8,5,0,0.8) 100%);
+}
+#ls > * { position: relative; z-index: 2; }
 
-  .logo { font-size:52px; font-weight:900; color:#8bc34a; letter-spacing:12px;
-          text-transform:uppercase; text-shadow:0 0 30px rgba(139,195,74,0.6);
-          animation: flicker 4s infinite; }
+/* ── BANDE TAMPON HAUT ── */
+.stamp-bar {
+  width: 100%;
+  border-bottom: 2px solid rgba(160,30,30,0.35);
+  background: rgba(30,5,5,0.55);
+  padding: 8px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
 
-  .subtitle { font-size:14px; letter-spacing:6px; color:#4a7c2a; margin-top:-16px; }
+.stamp-cls {
+  font-family: 'Special Elite', serif;
+  font-size: 13px;
+  letter-spacing: 6px;
+  color: rgba(200,50,50,0.75);
+  border: 2px solid rgba(200,50,50,0.55);
+  padding: 3px 14px;
+  display: inline-block;
+}
 
-  @keyframes flicker {
-    0%,95%,100%{ opacity:1 }
-    96%{ opacity:0.7 }
-    97%{ opacity:1 }
-    98%{ opacity:0.85 }
-  }
+.stamp-meta {
+  text-align: right;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: rgba(180,140,60,0.4);
+  font-style: italic;
+  line-height: 1.7;
+}
 
-  .status-box {
-    border:1px solid #3a5a1a; padding:20px 40px; width:600px;
-    background:rgba(0,20,0,0.5);
-  }
+.stamp-ref {
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: rgba(180,140,60,0.25);
+  font-family: 'Special Elite', serif;
+}
 
-  .status-line { font-size:12px; color:#5a8a3a; margin:4px 0; }
-  .status-line span { color:#8bc34a; }
+/* ── CONTENU CENTRAL ── */
+.doc-body {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 18px;
+}
 
-  .progress-container { width:600px; }
-  .progress-label { font-size:11px; color:#4a7c2a; margin-bottom:6px; letter-spacing:3px; }
-  .progress-bar {
-    height:6px; background:#0d1a07;
-    border:1px solid #2a4a12;
-  }
-  .progress-fill {
-    height:100%; background:#6a9f30;
-    width:0%; transition:width 0.3s ease;
-    box-shadow:0 0 8px rgba(106,159,48,0.8);
-  }
+.doc-wrap { width: 100%; max-width: 700px; }
 
-  .factions { display:flex; gap:40px; margin-top:10px; }
-  .faction-card {
-    flex:1; border:1px solid #2a4a12; padding:16px;
-    background:rgba(0,15,0,0.4); text-align:center;
-  }
-  .faction-name { font-size:13px; letter-spacing:4px; margin-bottom:8px; }
-  .faction-us { color:#4a9a6a; border-color:#2a5a3a; }
-  .faction-tal { color:#9a7a3a; border-color:#5a4a1a; }
-  .faction-desc { font-size:10px; color:#3a5a2a; line-height:1.6; }
+.frame-outer { border: 2px solid #3a2a10; padding: 3px; }
+.frame-inner {
+  border: 1px solid rgba(180,140,60,0.18);
+  padding: 18px 22px 14px;
+  background: rgba(22,14,4,0.72);
+}
 
-  .tips { font-size:11px; color:#3a5a1a; text-align:center;
-          max-width:500px; line-height:1.8; border-top:1px solid #1a3a0a;
-          padding-top:16px; }
+.doc-header {
+  text-align: center; margin-bottom: 11px;
+  padding-bottom: 11px; border-bottom: 1px solid #3a2a10;
+}
+.doc-title {
+  font-family: 'Special Elite', serif;
+  font-size: clamp(22px, 5vw, 40px);
+  color: #d4a840; letter-spacing: 8px; line-height: 1;
+  animation: flicker 10s infinite;
+}
+@keyframes flicker {
+  0%,87%,100%{opacity:1} 88%{opacity:0.72} 89%{opacity:1} 92%{opacity:0.88} 93%{opacity:1}
+}
+.doc-subtitle {
+  font-family: 'Special Elite', serif;
+  font-size: 11px; letter-spacing: 7px; color: #7a5a28; margin-top: 4px;
+}
+.doc-sub { font-size: 10px; letter-spacing: 3px; color: #5a3e18; margin-top: 4px; font-style: italic; }
 
-  .server-name { font-size:11px; letter-spacing:4px; color:#2a4a12; }
+.sep {
+  display: flex; align-items: center; gap: 10px;
+  color: #3a2a10; font-size: 8px; letter-spacing: 5px;
+  font-family: 'Special Elite', serif; margin: 8px 0;
+}
+.sep::before, .sep::after { content:''; flex:1; height:1px; background:#3a2a10; opacity:.7; }
+
+.mid-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; margin-bottom: 9px; }
+.factions-row { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; margin-bottom: 9px; }
+
+.field-block {
+  border: 1px solid rgba(180,140,60,0.18);
+  padding: 9px 12px; background: rgba(14,8,0,0.55); position: relative;
+}
+.field-block::before {
+  content: attr(data-label);
+  position: absolute; top:-7px; left:10px;
+  background: #100c04; padding: 0 5px;
+  font-size: 8px; letter-spacing: 4px; color: #7a5a28; font-family: 'Special Elite', serif;
+}
+.field-row {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: #5a3e18;
+  margin: 3px 0; border-bottom: 1px dotted rgba(180,140,60,0.1); padding-bottom: 2px;
+}
+.field-row:last-child { border-bottom:none; padding-bottom:0; }
+.field-row span { color: #c8a96e; font-weight:700; }
+.field-row .us-v  { color: #5a8a6a; }
+.field-row .tal-v { color: #a07828; }
+
+.faction-block {
+  border: 1px solid rgba(180,140,60,0.18);
+  padding: 9px 12px; background: rgba(14,8,0,0.55);
+  text-align: center; position: relative;
+}
+.faction-block::before {
+  content: attr(data-label);
+  position: absolute; top:-7px; left:10px;
+  background: #100c04; padding: 0 5px;
+  font-size: 8px; letter-spacing: 4px; color: #7a5a28; font-family: 'Special Elite', serif;
+}
+.faction-name-t {
+  font-family: 'Special Elite', serif;
+  font-size: 12px; letter-spacing: 4px; margin-bottom: 6px;
+}
+.f-us  .faction-name-t { color: #5a8a6a; }
+.f-tal .faction-name-t { color: #a07828; }
+.faction-hr { height:1px; background:rgba(180,140,60,0.14); margin:5px 0; }
+.faction-desc-t { font-size: 10px; color: #5a3e18; line-height:1.7; font-style:italic; }
+.freq-tag {
+  display:inline-block; margin-top:7px;
+  font-size:9px; letter-spacing:2px; padding:2px 8px; border:1px solid;
+}
+.f-us  .freq-tag { color:#4a7a5a; border-color:rgba(74,122,90,0.3); }
+.f-tal .freq-tag { color:#9a6a20; border-color:rgba(154,106,32,0.3); }
+
+.rules-band {
+  border: 1px solid rgba(180,140,60,0.18);
+  background: rgba(14,8,0,0.55);
+  padding: 7px 12px; margin-bottom: 9px;
+  overflow: hidden; position: relative;
+}
+.rules-band::before {
+  content: attr(data-label);
+  position: absolute; top:-7px; left:10px;
+  background: #100c04; padding: 0 5px;
+  font-size: 8px; letter-spacing: 4px; color: #7a5a28; font-family: 'Special Elite', serif;
+}
+.rules-ticker {
+  font-size: 10px; color: #5a3e18; white-space: nowrap;
+  font-style: italic; animation: ticker 38s linear infinite;
+}
+@keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+.progress-header {
+  display: flex; justify-content: space-between;
+  font-size: 8px; letter-spacing: 3px; color: #5a3e18;
+  margin-bottom: 5px; font-family: 'Special Elite', serif;
+}
+.progress-track {
+  height: 11px; background: rgba(14,8,0,0.8);
+  border: 1px solid rgba(180,140,60,0.22);
+  padding: 2px; margin-bottom: 3px;
+}
+.progress-fill {
+  height:100%; background:#7a5a28; width:0%;
+  transition:width 0.5s ease; position:relative;
+}
+.progress-fill::after {
+  content:''; position:absolute; right:0; top:0; bottom:0;
+  width:3px; background:#d4a840; opacity:.6;
+}
+.progress-ticks { display:flex; justify-content:space-between; padding:0 1px; margin-bottom:5px; }
+.tick-lbl { font-size:8px; color:#3a2a10; }
+
+.sys-log {
+  font-size: 10px; color: #5a3e18; min-height:36px;
+  margin-bottom: 6px; font-style:italic; letter-spacing:.3px;
+}
+.log-ok   { color: #4a6a3a; }
+.log-warn { color: #5a3e18; }
+.cursor-blk {
+  display:inline-block; width:6px; height:11px;
+  background:#7a5a28; vertical-align:middle;
+  animation: blink 1.3s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.tip-section {
+  font-size: 10px; color: #5a3e18; font-style: italic;
+  line-height: 1.7; border-top: 1px solid #3a2a10; padding-top: 7px;
+  text-align: center;
+}
+.tip-section .tip-key {
+  color: #7a5a28; font-style:normal; font-weight:700;
+  font-family: 'Special Elite', serif; letter-spacing: 2px;
+}
+
+/* ── BANDE SIGNATURE BAS ── */
+.sig-bar {
+  width: 100%;
+  border-top: 2px solid #3a2a10;
+  background: rgba(14,8,0,0.7);
+  padding: 9px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.sig-left {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: #3a2a10;
+  font-style: italic;
+  line-height: 1.7;
+}
+
+.sig-center {
+  text-align: center;
+  flex: 1;
+}
+
+.sig-line {
+  width: 140px;
+  height: 1px;
+  background: #3a2a10;
+  margin: 0 auto 4px;
+}
+
+.sig-name {
+  font-family: 'Special Elite', serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: #5a3e18;
+}
+
+.sig-title {
+  font-size: 8px;
+  letter-spacing: 3px;
+  color: #3a2a10;
+  margin-top: 2px;
+}
+
+.studio-badge {
+  border: 1px solid rgba(180,140,60,0.2);
+  padding: 5px 12px;
+  background: rgba(14,8,0,0.6);
+  text-align: center;
+  position: relative;
+  flex-shrink: 0;
+}
+.studio-badge::before {
+  content: 'DEVELOPED BY';
+  position: absolute; top:-7px; left:50%; transform:translateX(-50%);
+  background: #100c04; padding: 0 5px;
+  font-size: 7px; letter-spacing: 3px; color: #3a2a10;
+  font-family: 'Special Elite', serif; white-space: nowrap;
+}
+.studio-name {
+  font-family: 'Special Elite', serif;
+  font-size: 12px; letter-spacing: 3px; color: #9a7a3a;
+}
+.studio-sub { font-size: 8px; letter-spacing: 2px; color: #3a2a10; margin-top: 2px; }
+
+.preview-btns {
+  display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; justify-content: center;
+}
+.pvbtn {
+  font-family: 'Special Elite', serif; font-size: 10px; letter-spacing: 2px;
+  color: #6a4e22; background: transparent;
+  border: 1px solid rgba(180,140,60,0.22);
+  padding: 5px 14px; cursor: pointer;
+  transition: color .2s, border-color .2s;
+}
+.pvbtn:hover { color: #c8a96e; border-color: rgba(180,140,60,0.5); }
 </style>
-</head>
-<body>
-<div class="container">
-  <div class="server-name">SERVER: IRON THUNDER // CONNECT</div>
-  <div class="logo">IRON THUNDER</div>
-  <div class="subtitle">// MILITARY RP — AFGHANISTAN 1986 //</div>
 
-  <div class="status-box">
-    <div class="status-line">MODE: <span>MILITARY ROLEPLAY</span></div>
-    <div class="status-line">THÉÂTRE: <span>AFGHANISTAN, 1986</span></div>
-    <div class="status-line">JOUEURS CONNECTÉS: <span id="playerCount">...</span></div>
-    <div class="status-line">MAP: <span id="mapName">...</span></div>
-    <div class="status-line">STATUT: <span id="statusText">CHARGEMENT DES SYSTÈMES...</span></div>
-  </div>
+<div id="ls">
+  <div class="bg-grid"></div>
+  <div class="bg-vignette"></div>
 
-  <div class="factions">
-    <div class="faction-card faction-us">
-      <div class="faction-name">◈ US ARMY</div>
-      <div class="faction-desc">Forces spéciales américaines.<br>Tactiques, équipement supérieur.<br>Protégez vos intérêts stratégiques.</div>
-    </div>
-    <div class="faction-card faction-tal">
-      <div class="faction-name">◈ MOUDJAHIDINES</div>
-      <div class="faction-desc">Résistance afghane, terrain connu.<br>Guérilla, embuscades, survie.<br>Défendez votre territoire.</div>
+  <!-- BANDE TAMPON HAUT -->
+  <div class="stamp-bar">
+    <div class="stamp-ref">CIA — DOC. REF: 1986-0847</div>
+    <div class="stamp-cls">TOP SECRET / CLASSIFIED</div>
+    <div class="stamp-meta">
+      DATE: 14 AUG 1986<br>
+      COPY 1 OF 1 — EYES ONLY
     </div>
   </div>
 
-  <div class="progress-container">
-    <div class="progress-label">// INITIALISATION DES SYSTÈMES</div>
-    <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+  <!-- CONTENU -->
+  <div class="doc-body">
+    <div class="doc-wrap">
+      <div class="frame-outer">
+        <div class="frame-inner">
+
+          <div class="doc-header">
+            <div class="doc-title">PROJECT VOSTOK</div>
+            <div class="doc-subtitle">MILITARY ROLEPLAY</div>
+            <div class="doc-sub">— Operation Brief — Afghanistan, Sector 7 — 1986 —</div>
+          </div>
+
+          <div class="sep">INTEL REPORT</div>
+
+          <div class="mid-grid">
+            <div class="field-block" data-label="THEATRE OPERATIONS">
+              <div class="field-row">ZONE OPS   <span id="srv-map">—</span></div>
+              <div class="field-row">EFFECTIFS  <span id="srv-players">— / —</span></div>
+              <div class="field-row">LIAISON    <span id="srv-ping">— ms</span></div>
+              <div class="field-row">PROTOCOLE  <span>MILITARY RP</span></div>
+            </div>
+            <div class="field-block" data-label="SITUATION ACTUELLE">
+              <div class="field-row">SECTEUR US   <span class="us-v">SECURED</span></div>
+              <div class="field-row">SECTEUR TAL  <span class="tal-v">ACTIVE</span></div>
+              <div class="field-row">OBJECTIF     <span id="srv-obj">COL KHYBER</span></div>
+              <div class="field-row">T-MINUS      <span id="srv-timer">—:—</span></div>
+            </div>
+          </div>
+
+          <div class="sep">FORCES EN PRESENCE</div>
+
+          <div class="factions-row">
+            <div class="faction-block f-us" data-label="FRIENDLY FORCES">
+              <div class="faction-name-t">U.S. ARMY</div>
+              <div class="faction-hr"></div>
+              <div class="faction-desc-t">
+                3rd Special Forces Group<br>
+                FOB Jalalabad — Afghanistan<br>
+                Équipement supérieur &amp; soutien aérien<br>
+                Liaisons radio chiffrées
+              </div>
+              <div class="freq-tag">FREQ. 101.5 MHz</div>
+            </div>
+            <div class="faction-block f-tal" data-label="HOSTILE FORCES">
+              <div class="faction-name-t">MOUDJAHIDINES</div>
+              <div class="faction-hr"></div>
+              <div class="faction-desc-t">
+                Résistance afghane — 1986<br>
+                Villages &amp; cols montagneux<br>
+                Guérilla &amp; terrain maîtrisé<br>
+                Réseaux souterrains
+              </div>
+              <div class="freq-tag">FREQ. 202.0 MHz</div>
+            </div>
+          </div>
+
+          <div class="sep">DIRECTIVES</div>
+
+          <div class="rules-band" data-label="REGLEMENT OPERATIONNEL">
+            <div class="rules-ticker">
+              Art. 1 — Respect de la hiérarchie militaire obligatoire &nbsp;·&nbsp;
+              Art. 2 — Roleplay permanent, aucun BreakRP toléré &nbsp;·&nbsp;
+              Art. 3 — Attaque de FOB = déclaration de guerre préalable &nbsp;·&nbsp;
+              Art. 4 — VDM et RDM passibles d'exclusion définitive &nbsp;·&nbsp;
+              Art. 5 — Radio /r obligatoire en opération &nbsp;·&nbsp;
+              Art. 6 — Salut aux supérieurs requis &nbsp;·&nbsp;
+              Art. 7 — Ni meta-gaming ni power-gaming tolérés &nbsp;·&nbsp;
+              Art. 1 — Respect de la hiérarchie militaire obligatoire &nbsp;·&nbsp;
+              Art. 2 — Roleplay permanent, aucun BreakRP toléré &nbsp;·&nbsp;
+              Art. 3 — Attaque de FOB = déclaration de guerre préalable &nbsp;·&nbsp;
+              Art. 4 — VDM et RDM passibles d'exclusion définitive &nbsp;·&nbsp;
+              Art. 5 — Radio /r obligatoire en opération &nbsp;·&nbsp;
+              Art. 6 — Salut aux supérieurs requis &nbsp;·&nbsp;
+              Art. 7 — Ni meta-gaming ni power-gaming tolérés
+            </div>
+          </div>
+
+          <div class="sep">PROGRESSION</div>
+
+          <div class="progress-header">
+            <span>// CHARGEMENT DES RESSOURCES</span>
+            <span id="pct-label">0%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="prog-bar"></div>
+          </div>
+          <div class="progress-ticks">
+            <span class="tick-lbl">0</span>
+            <span class="tick-lbl">25</span>
+            <span class="tick-lbl">50</span>
+            <span class="tick-lbl">75</span>
+            <span class="tick-lbl">100</span>
+          </div>
+
+          <div class="sys-log" id="sys-log">
+            <div class="log-warn">[INIT] Établissement de la liaison sécurisée... <span class="cursor-blk"></span></div>
+          </div>
+
+          <div class="tip-section">
+            <span class="tip-key" id="tip-key">BRIEFING</span>
+            <span id="tip-text"> — Rejoignez une escouade dès votre connexion. Un soldat isolé est une cible.</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-btns">
+      <button class="pvbtn" onclick="simLoad()">Simuler chargement</button>
+      <button class="pvbtn" onclick="nextTip()">Conseil suivant</button>
+      <button class="pvbtn" onclick="sendPrompt('Génère le code HTML final complet du loading screen Project Vostok version tampon en haut et signature en bas')">Code final ↗</button>
+    </div>
   </div>
 
-  <div class="tips" id="tipText">CONSEIL: Communiquez via radio (/freq 101.5) et rejoignez votre escouade dès l'entrée.</div>
+  <!-- BANDE SIGNATURE BAS -->
+  <div class="sig-bar">
+    <div class="sig-left">
+      Ce document est la propriété exclusive<br>
+      de la Central Intelligence Agency — 1986
+    </div>
+    <div class="sig-center">
+      <div class="sig-line"></div>
+      <div class="sig-name">Col. R. Hargrove</div>
+      <div class="sig-title">COMMANDING OFFICER — 3rd SFG</div>
+    </div>
+    <div class="studio-badge">
+      <div class="studio-name">ShybaStudio</div>
+      <div class="studio-sub">EST. 2024</div>
+    </div>
+  </div>
+
 </div>
 
 <script>
-// Connexion GMod
-if(typeof(GameDetails) === 'function') {
-  GameDetails = function(sv, map, maxply, ply, idx, lv) {
-    document.getElementById('playerCount').textContent = ply + ' / ' + maxply;
-    document.getElementById('mapName').textContent = map.toUpperCase();
+const TIPS = [
+  ["BRIEFING",  "Rejoignez une escouade dès votre connexion. Un soldat isolé est une cible."],
+  ["RADIO",     "Utilisez /r [message] sur votre fréquence active. Changez avec /freq [NUM]."],
+  ["MEDICAL",   "Signalez vos blessures au médecin d'escouade. Un saignement non traité est fatal."],
+  ["PROTOCOLE", "Le salut aux supérieurs est obligatoire. Ignorez cet ordre — sanction immédiate."],
+  ["TACTIQUE",  "Les FOB sont sanctuarisées. Toute attaque sans déclaration est un crime de guerre."],
+  ["ECONOMIE",  "Chaque objectif atteint rapporte des crédits. Armurerie disponible à la FOB."],
+  ["ESCOUADE",  "Créez un canal privé avec /squad create [NOM] [FREQ]. Chiffrement automatique."],
+  ["HONNEUR",   "Le code militaire est votre loi. Respectez-le en toutes circonstances."],
+];
+const LOGS = [
+  {s:'ok', t:'[AUTH] Liaison sécurisée ............... établie'},
+  {s:'ok', t:'[SYS]  Faction system .................. chargé'},
+  {s:'ok', t:'[SYS]  Grades & permissions ............. chargés'},
+  {s:'ok', t:'[SYS]  Système médical .................. chargé'},
+  {s:'ok', t:'[SYS]  Réseau radio ..................... chargé'},
+  {s:'ok', t:'[SYS]  Capture de zones ................. chargé'},
+  {s:'ok', t:'[SYS]  Module économique ................ chargé'},
+  {s:'ok', t:'[UI]   HUD client ....................... chargé'},
+  {s:'ok', t:"[SYS]  Système d'escouade ............... chargé"},
+  {s:'ok', t:'[SEC]  Couche anti-triche ............... active'},
+  {s:'ok', t:'[OK]   Tous systèmes opérationnels — CONNEXION EN COURS...'},
+];
+
+let tipIdx = 0, logIdx = 1;
+const logEl = document.getElementById('sys-log');
+
+function nextTip() {
+  tipIdx = (tipIdx + 1) % TIPS.length;
+  document.getElementById('tip-key').textContent  = TIPS[tipIdx][0];
+  document.getElementById('tip-text').textContent = ' — ' + TIPS[tipIdx][1];
+}
+setInterval(nextTip, 7000);
+
+function pushLog(e) {
+  const d = document.createElement('div');
+  d.className = 'log-' + e.s;
+  d.textContent = e.t;
+  const pending = logEl.querySelector('.log-warn:last-child');
+  if (pending) pending.remove();
+  logEl.appendChild(d);
+  if (logIdx < LOGS.length) {
+    const p = document.createElement('div');
+    p.className = 'log-warn';
+    p.innerHTML = LOGS[logIdx].t.split('...')[0] + '... <span class="cursor-blk"></span>';
+    logEl.appendChild(p);
   }
-  SetFilesNeeded = function(n) {}
-  SetStatusChanged = function(s) {
-    document.getElementById('statusText').textContent = s.toUpperCase();
-  }
-  DownloadingFile = function(file) {}
-  SetLoadingProgressBar = function(pct) {
-    document.getElementById('progressBar').style.width = (pct * 100) + '%';
-  }
+  if (logEl.children.length > 4) logEl.removeChild(logEl.firstChild);
 }
 
-const tips = [
-  "Rejoignez une escouade dès votre connexion — un soldat seul est un soldat mort.",
-  "Utilisez /r [message] pour parler sur votre fréquence radio active.",
-  "Le respect de la hiérarchie est OBLIGATOIRE — saluez vos supérieurs.",
-  "Signalez vos blessures à un médecin — les soins non traités sont létaux.",
-  "Les FOB sont des zones sécurisées — ne les attaquez pas sans déclaration de guerre.",
-  "Chaque kill hostile rapporte des crédits — utilisez-les à l'armurerie de votre faction.",
-];
-let ti = 0;
+let simInt = null;
+function simLoad() {
+  let pct = 0; logIdx = 1;
+  logEl.innerHTML = '<div class="log-warn">[INIT] Établissement de la liaison... <span class="cursor-blk"></span></div>';
+  document.getElementById('prog-bar').style.width = '0%';
+  document.getElementById('pct-label').textContent = '0%';
+  if (simInt) clearInterval(simInt);
+  simInt = setInterval(() => {
+    pct = Math.min(100, pct + Math.random() * 3.5 + 0.5);
+    const p = Math.round(pct);
+    document.getElementById('prog-bar').style.width = p + '%';
+    document.getElementById('pct-label').textContent = p + '%';
+    if (logIdx < LOGS.length && p % 9 === 0) { pushLog(LOGS[logIdx]); logIdx++; }
+    if (pct >= 100) clearInterval(simInt);
+  }, 110);
+}
+
+let t = 22*60+15;
 setInterval(() => {
-  ti = (ti + 1) % tips.length;
-  document.getElementById('tipText').textContent = "CONSEIL: " + tips[ti];
-}, 5000);
+  t = t > 0 ? t-1 : 30*60;
+  const el = document.getElementById('srv-timer');
+  if (el) el.textContent = String(Math.floor(t/60)).padStart(2,'0') + ':' + String(t%60).padStart(2,'0');
+}, 1000);
+
+let pingV = 32;
+setInterval(() => {
+  pingV = Math.max(18, Math.min(85, pingV + Math.round(Math.random()*8-4)));
+  const el = document.getElementById('srv-ping');
+  if (el) el.textContent = pingV + ' ms';
+}, 3000);
+
+document.getElementById('srv-map').textContent = 'RP_MOUNTAINSIDE';
+document.getElementById('srv-players').textContent = '47 / 64';
+document.getElementById('srv-ping').textContent = '32 ms';
 </script>
-</body>
-</html>
